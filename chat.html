@@ -1,885 +1,518 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <title>مساعد الهيئة السعودية للمهندسين</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
+  <!-- خط Tajawal -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     :root {
       --sce-primary: #004b8d;
+      --sce-primary-soft: #e6f0fb;
       --sce-bg: #f4f6f9;
       --sce-card: #ffffff;
       --sce-text: #222;
       --sce-muted: #777;
       --sce-border: #e0e3ea;
+      --sce-radius-lg: 18px;
+      --sce-radius-full: 999px;
+      --sce-shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
-      font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #e6f0ff 0, #f4f6f9 40%, #e7ebf5 100%);
       margin: 0;
       padding: 0;
-      direction: rtl;
+      font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #eef4ff 0, #f4f6f9 42%, #edf2f7 100%);
       color: var(--sce-text);
-    }
-
-    .page-wrapper {
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 460px;
       padding: 24px;
     }
 
-    .chat-shell {
-      width: 100%;
-      max-width: 520px;
-      background: radial-gradient(circle at top left, rgba(0,75,141,0.08), transparent 55%), var(--sce-card);
+    .card {
+      background: linear-gradient(145deg, #ffffff, #f7f9fc);
       border-radius: 26px;
-      padding: 18px 18px 20px;
-      box-shadow:
-        0 22px 45px rgba(0,0,0,0.12),
-        0 0 0 1px rgba(255,255,255,0.4);
-      position: relative;
+      box-shadow: var(--sce-shadow-soft);
       overflow: hidden;
-      border: 1px solid var(--sce-border);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      display: flex;
+      flex-direction: column;
+      min-height: 520px;
+      max-height: 680px;
     }
 
-    .header {
+    .card-header {
+      padding: 18px 20px 10px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 10px;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 75, 141, 0.06),
+        rgba(255, 255, 255, 0.9)
+      );
+      backdrop-filter: blur(12px);
     }
 
-    .logo-wrap {
-      width: 52px;
-      height: 52px;
-      border-radius: 20px;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #d3e6ff);
+    .logo-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #dbeafe);
+      border: 1px solid rgba(148, 163, 184, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 20px rgba(0,75,141,0.25);
-      flex-shrink: 0;
       overflow: hidden;
     }
 
-    .logo-wrap img {
-      width: 80%;
-      height: 80%;
+    .logo-circle img {
+      max-width: 80%;
+      max-height: 80%;
       object-fit: contain;
     }
 
-    .title-wrap { flex: 1; }
-
-    .title-wrap h1 {
-      font-size: 18px;
-      margin: 0;
-      color: var(--sce-primary);
+    .header-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .title-wrap p {
-      margin: 2px 0 0;
-      font-size: 12px;
+    .header-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #0f172a;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
       color: var(--sce-muted);
     }
 
-    .pill-badge {
-      font-size: 11px;
-      background: rgba(0,75,141,0.08);
-      color: var(--sce-primary);
-      padding: 5px 10px;
-      border-radius: 999px;
+    .status-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: 4px;
+      background: rgba(22, 163, 74, 0.06);
+      color: #15803d;
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 10px;
+      border: 1px solid rgba(22, 163, 74, 0.12);
     }
 
-    .pill-badge span.icon {
+    .status-dot {
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: #37c978;
-      box-shadow: 0 0 8px rgba(55,201,120,0.8);
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.35);
     }
 
-    .messages-wrapper {
-      position: relative;
-      margin-top: 4px;
-      margin-bottom: 12px;
-    }
-
-    #messages {
-      height: 420px;
-      overflow-y: auto;
-      padding: 50px 10px 10px; /* مساحة للكرة */
-      border-radius: 18px;
-      border: 1px solid var(--sce-border);
-      background:
-        radial-gradient(circle at top, rgba(0,75,141,0.04), transparent 60%),
-        rgba(248,249,252,0.96);
-      position: relative;
-    }
-
-    .msg {
-      margin: 10px 0;
-      padding: 10px 13px;
-      border-radius: 14px;
-      max-width: 78%;
-      line-height: 1.7;
-      font-size: 14px;
-      white-space: pre-wrap;
-      position: relative;
-    }
-
-    .msg.user {
-      margin-left: auto;
-      background: linear-gradient(135deg, #cfe4ff, #94c4ff);
-      color: #042248;
-      border-bottom-right-radius: 4px;
-      box-shadow: 0 8px 16px rgba(0,75,141,0.22);
-    }
-
-    .msg.bot {
-      margin-right: auto;
-      background: rgba(255,255,255,0.93);
-      border: 1px solid rgba(0,0,0,0.03);
-      border-bottom-left-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    }
-
-    .orb-layer {
-      pointer-events: none;
-    }
-
-    .loading-orb {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 25%, #ffffff 0, #d6f0ff 22%, transparent 55%),
-        radial-gradient(circle at 70% 80%, #8bd8ff 0, #004b8d 60%);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.4),
-        0 0 20px rgba(0,75,141,0.35),
-        0 20px 35px rgba(0,0,0,0.35);
-      animation:
-        orbFloat 3s ease-in-out infinite,
-        orbGlow 2.6s ease-in-out infinite;
-    }
-
-    .loading-orb::after {
-      content: "";
-      position: absolute;
-      inset: 20%;
-      border-radius: inherit;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.9), transparent 55%);
-      mix-blend-mode: screen;
-    }
-
-    .loading-orb.active {
-      animation:
-        orbFloatFast 1.6s ease-in-out infinite,
-        orbGlowFast 1.4s ease-in-out infinite;
-      box-shadow:
-        0 0 0 1px rgba(144,202,249,0.8),
-        0 0 32px rgba(56,189,248,0.9),
-        0 22px 40px rgba(0,0,0,0.45);
-    }
-
-    @keyframes orbFloat {
-      0%,100% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -10px); }
-    }
-
-    @keyframes orbGlow {
-      0%,100% { filter: drop-shadow(0 0 10px rgba(0,75,141,0.6)); }
-      50% { filter: drop-shadow(0 0 18px rgba(0,188,212,0.9)); }
-    }
-
-    @keyframes orbFloatFast {
-      0%,100% { transform: translate(-50%, -2px) scale(1.02); }
-      50% { transform: translate(-50%, -12px) scale(1.07); }
-    }
-
-    @keyframes orbGlowFast {
-      0%,100% { filter: drop-shadow(0 0 14px rgba(0,188,212,0.95)); }
-      50% { filter: drop-shadow(0 0 26px rgba(129,230,217,1)); }
-    }
-
-    .orb-caption {
-      position: absolute;
-      top: 86px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 12px;
-      color: var(--sce-muted);
-      background: rgba(255,255,255,0.88);
-      padding: 4px 12px;
-      border-radius: 999px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      white-space: nowrap;
-    }
-
-    .input-box {
+    .card-body {
+      padding: 10px 16px 0;
       display: flex;
-      margin-top: 8px;
+      flex-direction: column;
+      flex: 1;
+      position: relative;
+    }
+
+    .helper-hint {
+      font-size: 11px;
+      color: var(--sce-muted);
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      border-radius: 12px;
+      background: rgba(241, 245, 249, 0.7);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 8px;
-      align-items: center;
     }
 
-    .input-area {
+    .helper-hint span {
+      font-size: 11px;
+    }
+
+    .chat-window {
       flex: 1;
+      overflow-y: auto;
+      padding: 6px 4px 12px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148, 163, 184, 0.7) transparent;
+      position: relative;
+    }
+
+    .chat-window::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-window::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.7);
+      border-radius: 999px;
+    }
+
+    .message-row {
+      display: flex;
+      margin-bottom: 8px;
+    }
+
+    .message-row.assistant {
+      justify-content: flex-start;
+    }
+
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .message-bubble {
+      max-width: 82%;
+      padding: 8px 11px;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      position: relative;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.09);
+    }
+
+    .assistant .message-bubble {
+      background: linear-gradient(135deg, #004b8d, #0f75bd);
+      color: #f9fafb;
+      border-bottom-right-radius: 4px;
+    }
+
+    .user .message-bubble {
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      border-bottom-left-radius: 4px;
+      color: #111827;
+    }
+
+    .message-meta {
+      margin-top: 3px;
+      font-size: 10px;
+      color: var(--sce-muted);
+      display: inline-block;
+    }
+
+    .card-footer {
+      border-top: 1px solid rgba(226, 232, 240, 0.9);
+      padding: 10px 14px 12px;
+      background: linear-gradient(
+        180deg,
+        rgba(248, 250, 252, 0.95),
+        rgba(241, 245, 249, 0.98)
+      );
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .input-row {
       display: flex;
       align-items: center;
-      background: rgba(248,249,252,0.96);
-      border-radius: 999px;
-      padding: 4px 10px;
-      border: 1px solid var(--sce-border);
+      gap: 8px;
     }
 
-    .input-area input {
+    .chat-input {
       flex: 1;
-      padding: 9px 6px;
       border-radius: 999px;
-      border: none;
-      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      padding: 9px 14px;
+      font-family: inherit;
+      font-size: 13px;
       outline: none;
-      font-size: 14px;
-      color: var(--sce-text);
+      background: #ffffff;
+      transition: all 0.16s ease;
     }
 
-    .input-area input::placeholder {
-      color: var(--sce-muted);
+    .chat-input:focus {
+      border-color: var(--sce-primary);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.12);
     }
 
     .send-btn {
-      padding: 10px 18px;
-      background: linear-gradient(135deg, var(--sce-primary), #1f7ed6);
-      color: #fff;
-      border: none;
       border-radius: 999px;
+      border: none;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      font-size: 14px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 8px 20px rgba(0,75,141,0.45);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
-      white-space: nowrap;
+      background: radial-gradient(circle at 10% 0%, #0f75bd, #004b8d);
+      color: #f9fafb;
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
+      transition: transform 0.08s ease, box-shadow 0.12s ease, opacity 0.16s ease;
     }
 
-    .send-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(0,75,141,0.55);
-      background: linear-gradient(135deg, #005fae, #2490ff);
+    .send-btn:disabled {
+      opacity: 0.55;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
     }
 
-    .send-btn:active {
-      transform: translateY(1px);
-      box-shadow: 0 4px 12px rgba(0,75,141,0.35);
+    .send-btn:not(:disabled):active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.45);
     }
 
-    #messages::-webkit-scrollbar { width: 6px; }
-    #messages::-webkit-scrollbar-track { background: transparent; }
-    #messages::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.16);
+    .footer-hint {
+      font-size: 9px;
+      color: var(--sce-muted);
+      text-align: center;
+    }
+
+    .footer-hint span {
+      font-weight: 500;
+    }
+
+    /* كرة اللودينج */
+    .floating-orb {
+      position: absolute;
+      left: 50%;
+      top: -22px;
+      transform: translateX(-50%);
+      width: 34px;
+      height: 34px;
       border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #bfdbfe);
+      box-shadow:
+        0 0 0 4px rgba(191, 219, 254, 0.65),
+        0 18px 32px rgba(15, 23, 42, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 5;
+      animation: bobbing 2.4s ease-in-out infinite;
     }
 
-    @media (max-width: 600px) {
-      .chat-shell { padding: 14px 12px 16px; border-radius: 18px; }
-      #messages { height: 360px; }
-      .send-btn span { display: none; }
+    .floating-orb-core {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #0f75bd);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    .floating-orb.typing .floating-orb-core {
+      animation: pulse-fast 0.8s ease-in-out infinite;
+    }
+
+    @keyframes bobbing {
+      0% {
+        transform: translate(-50%, -2px);
+      }
+      50% {
+        transform: translate(-50%, 4px);
+      }
+      100% {
+        transform: translate(-50%, -2px);
+      }
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: scale(0.9);
+        opacity: 0.85;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse-fast {
+      0%,
+      100% {
+        transform: scale(0.85);
+        opacity: 0.8;
+      }
+      50% {
+        transform: scale(1.12);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .app-shell {
+        padding: 12px;
+      }
+      .card {
+        border-radius: 20px;
+        min-height: 520px;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="page-wrapper">
-    <div class="chat-shell">
-      <div class="header">
-        <div class="logo-wrap">
-          <!-- ضع ملف اللوقو باسم sce-logo.png بجانب هذا الملف إن حبيت -->
-          <img src="sce-logo.png" alt="شعار الهيئة السعودية للمهندسين" onerror="this.style.display='none'" />
+  <div class="app-shell">
+    <div class="card">
+      <div class="card-header">
+        <div class="logo-circle">
+          <img src="sce-logo.png" alt="شعار الهيئة السعودية للمهندسين" />
         </div>
-        <div class="title-wrap">
-          <h1>مساعد الهيئة السعودية للمهندسين</h1>
-          <p>اسأل عن الاعتماد المهني، المكاتب الهندسية، الدورات، اللجان وأكثر.</p>
+        <div class="header-text">
+          <div class="header-title">
+            مساعد الهيئة السعودية للمهندسين
+          </div>
+          <div class="header-subtitle">
+            اسأل عن الاعتماد المهني، المكاتب الهندسية، الدورات، اللجان وأكثر.
+          </div>
         </div>
-      </div>
-
-      <div class="pill-badge">
-        <span class="icon"></span>
-        متصل · يعتمد على وثائق ولوائح الهيئة
-      </div>
-
-      <div class="messages-wrapper">
-        <div id="messages"></div>
-
-        <div class="orb-layer">
-          <div id="loadingOrb" class="loading-orb"></div>
-          <div class="orb-caption">ابدأ بسؤال مثل: "ما هي متطلبات الاعتماد المهني؟"</div>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>متصل</span>
         </div>
       </div>
 
-      <div class="input-box">
-        <div class="input-area">
-          <input id="msg" placeholder="اكتب سؤالك هنا..." autocomplete="off" />
+      <div class="card-body">
+        <div class="helper-hint">
+          <span>ابدأ بسؤال مثل: "ما هي متطلبات الاعتماد المهني؟"</span>
         </div>
-        <button class="send-btn" id="sendBtn">
-          <span>إرسال</span>
-          <svg viewBox="0 0 20 20" fill="none">
-            <path d="M3.2 16.5L16.7 10L3.2 3.5L3.2 8.3L11 10L3.2 11.7L3.2 16.5Z" fill="white"/>
-          </svg>
-        </button>
+
+        <div id="chat-window" class="chat-window">
+          <div class="message-row assistant">
+            <div class="message-bubble">
+              <div>مرحبًا 👋 أنا المساعد الذكي للهيئة السعودية للمهندسين.</div>
+              <div>كيف أقدر أساعدك اليوم؟</div>
+              <div class="message-meta">مساعد الهيئة</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="floating-orb" id="typing-orb">
+          <div class="floating-orb-core"></div>
+        </div>
+
+        <form id="chat-form" class="input-row">
+          <input
+            type="text"
+            id="user-input"
+            class="chat-input"
+            placeholder="اكتب سؤالك هنا..."
+            autocomplete="off"
+          />
+          <button type="submit" id="send-btn" class="send-btn">
+            إرسال
+          </button>
+        </form>
+
+        <div class="footer-hint">
+          يعتمد على <span>أنظمة ولوائح الهيئة</span> وإرشادات عامة؛ لا يُعد بديلًا عن
+          الرد الرسمي.
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // غيّر هذا لو عندك دومين آخر للـ API
-    const API_URL = "https://sce-assistant-api.onrender.com/chat";
+    const chatWindow = document.getElementById("chat-window");
+    const chatForm = document.getElementById("chat-form");
+    const userInput = document.getElementById("user-input");
+    const sendBtn = document.getElementById("send-btn");
+    const typingOrb = document.getElementById("typing-orb");
 
-    let threadId = null;
+    function appendMessage(text, sender = "assistant") {
+      const row = document.createElement("div");
+      row.className = `message-row ${sender}`;
 
-    const messagesEl = document.getElementById("messages");
-    const inputEl = document.getElementById("msg");
-    const sendBtn = document.getElementById("sendBtn");
-    const loadingOrb = document.getElementById("loadingOrb");
+      const bubble = document.createElement("div");
+      bubble.className = "message-bubble";
 
-    function addMessage(text, isUser = false) {
-      const div = document.createElement("div");
-      div.className = "msg " + (isUser ? "user" : "bot");
-      div.textContent = text;
-      messagesEl.appendChild(div);
-      // تنزل المحادثة تلقائيًا لآخر سطر
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      return div;
+      const textNode = document.createElement("div");
+      textNode.textContent = text;
+      bubble.appendChild(textNode);
+
+      const meta = document.createElement("div");
+      meta.className = "message-meta";
+      meta.textContent = sender === "assistant" ? "مساعد الهيئة" : "أنت";
+      bubble.appendChild(meta);
+
+      row.appendChild(bubble);
+      chatWindow.appendChild(row);
+
+      chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
-    function setOrbActive(isActive) {
-      if (!loadingOrb) return;
-      if (isActive) {
-        loadingOrb.classList.add("active");
+    function setTyping(isTyping) {
+      if (isTyping) {
+        typingOrb.classList.add("typing");
       } else {
-        loadingOrb.classList.remove("active");
+        typingOrb.classList.remove("typing");
       }
     }
 
-    async function sendMessage() {
-      const text = inputEl.value.trim();
-      if (!text) return;
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const message = userInput.value.trim();
+      if (!message) return;
 
-      addMessage(text, true);
-      inputEl.value = "";
+      appendMessage(message, "user");
+      userInput.value = "";
+      userInput.focus();
 
-      // فقاعة "جاري البحث"
-      const loadingBubble = document.createElement("div");
-      loadingBubble.className = "msg bot";
-      loadingBubble.textContent = "جاري البحث في لوائح وأنظمة الهيئة...";
-      messagesEl.appendChild(loadingBubble);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-
-      setOrbActive(true);
       sendBtn.disabled = true;
-      inputEl.disabled = true;
+      setTyping(true);
 
       try {
-        const res = await fetch(API_URL, {
+        const res = await fetch("/chat", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, threadId })
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
         });
 
-        const data = await res.json();
-        threadId = data.threadId;
-
-        loadingBubble.remove();
-        setOrbActive(false);
-        sendBtn.disabled = false;
-        inputEl.disabled = false;
-        inputEl.focus();
-
-        if (data.answer) {
-          addMessage(data.answer, false);
-        } else if (data.error) {
-          addMessage("⚠️ " + (data.error || "حدث خطأ أثناء المعالجة."), false);
-        } else {
-          addMessage("⚠️ حدث خطأ غير متوقع.", false);
+        if (!res.ok) {
+          throw new Error("خطأ في الاتصال بالخادم");
         }
+
+        const data = await res.json();
+        const reply = data.reply || "حدث خطأ أثناء جلب الرد، حاول مرة أخرى لاحقًا.";
+        appendMessage(reply, "assistant");
       } catch (err) {
         console.error(err);
-        loadingBubble.remove();
-        setOrbActive(false);
+        appendMessage(
+          "واجهتني مشكلة أثناء التواصل مع الخادم، الرجاء المحاولة مرة أخرى.",
+          "assistant"
+        );
+      } finally {
         sendBtn.disabled = false;
-        inputEl.disabled = false;
-        addMessage("⚠️ تعذّر الاتصال بالخادم، تأكد من عمل الـ API أو الشبكة.", false);
-      }
-    }
-
-    sendBtn.addEventListener("click", sendMessage);
-
-    inputEl.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
+        setTyping(false);
       }
     });
   </script>
 </body>
 </html>
-=======
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <title>مساعد الهيئة السعودية للمهندسين</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      --sce-primary: #004b8d;
-      --sce-bg: #f4f6f9;
-      --sce-card: #ffffff;
-      --sce-text: #222;
-      --sce-muted: #777;
-      --sce-border: #e0e3ea;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #e6f0ff 0, #f4f6f9 40%, #e7ebf5 100%);
-      margin: 0;
-      padding: 0;
-      direction: rtl;
-      color: var(--sce-text);
-    }
-
-    .page-wrapper {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .chat-shell {
-      width: 100%;
-      max-width: 520px;
-      background: radial-gradient(circle at top left, rgba(0,75,141,0.08), transparent 55%), var(--sce-card);
-      border-radius: 26px;
-      padding: 18px 18px 20px;
-      box-shadow:
-        0 22px 45px rgba(0,0,0,0.12),
-        0 0 0 1px rgba(255,255,255,0.4);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--sce-border);
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .logo-wrap {
-      width: 52px;
-      height: 52px;
-      border-radius: 20px;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #d3e6ff);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 20px rgba(0,75,141,0.25);
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
-    .logo-wrap img {
-      width: 80%;
-      height: 80%;
-      object-fit: contain;
-    }
-
-    .title-wrap { flex: 1; }
-
-    .title-wrap h1 {
-      font-size: 18px;
-      margin: 0;
-      color: var(--sce-primary);
-    }
-
-    .title-wrap p {
-      margin: 2px 0 0;
-      font-size: 12px;
-      color: var(--sce-muted);
-    }
-
-    .pill-badge {
-      font-size: 11px;
-      background: rgba(0,75,141,0.08);
-      color: var(--sce-primary);
-      padding: 5px 10px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .pill-badge span.icon {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #37c978;
-      box-shadow: 0 0 8px rgba(55,201,120,0.8);
-    }
-
-    .messages-wrapper {
-      position: relative;
-      margin-top: 4px;
-      margin-bottom: 12px;
-    }
-
-    #messages {
-      height: 420px;
-      overflow-y: auto;
-      padding: 50px 10px 10px; /* مساحة للكرة */
-      border-radius: 18px;
-      border: 1px solid var(--sce-border);
-      background:
-        radial-gradient(circle at top, rgba(0,75,141,0.04), transparent 60%),
-        rgba(248,249,252,0.96);
-      position: relative;
-    }
-
-    .msg {
-      margin: 10px 0;
-      padding: 10px 13px;
-      border-radius: 14px;
-      max-width: 78%;
-      line-height: 1.7;
-      font-size: 14px;
-      white-space: pre-wrap;
-      position: relative;
-    }
-
-    .msg.user {
-      margin-left: auto;
-      background: linear-gradient(135deg, #cfe4ff, #94c4ff);
-      color: #042248;
-      border-bottom-right-radius: 4px;
-      box-shadow: 0 8px 16px rgba(0,75,141,0.22);
-    }
-
-    .msg.bot {
-      margin-right: auto;
-      background: rgba(255,255,255,0.93);
-      border: 1px solid rgba(0,0,0,0.03);
-      border-bottom-left-radius: 4px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    }
-
-    .orb-layer {
-      pointer-events: none;
-    }
-
-    .loading-orb {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 25%, #ffffff 0, #d6f0ff 22%, transparent 55%),
-        radial-gradient(circle at 70% 80%, #8bd8ff 0, #004b8d 60%);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.4),
-        0 0 20px rgba(0,75,141,0.35),
-        0 20px 35px rgba(0,0,0,0.35);
-      animation:
-        orbFloat 3s ease-in-out infinite,
-        orbGlow 2.6s ease-in-out infinite;
-    }
-
-    .loading-orb::after {
-      content: "";
-      position: absolute;
-      inset: 20%;
-      border-radius: inherit;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.9), transparent 55%);
-      mix-blend-mode: screen;
-    }
-
-    .loading-orb.active {
-      animation:
-        orbFloatFast 1.6s ease-in-out infinite,
-        orbGlowFast 1.4s ease-in-out infinite;
-      box-shadow:
-        0 0 0 1px rgba(144,202,249,0.8),
-        0 0 32px rgba(56,189,248,0.9),
-        0 22px 40px rgba(0,0,0,0.45);
-    }
-
-    @keyframes orbFloat {
-      0%,100% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -10px); }
-    }
-
-    @keyframes orbGlow {
-      0%,100% { filter: drop-shadow(0 0 10px rgba(0,75,141,0.6)); }
-      50% { filter: drop-shadow(0 0 18px rgba(0,188,212,0.9)); }
-    }
-
-    @keyframes orbFloatFast {
-      0%,100% { transform: translate(-50%, -2px) scale(1.02); }
-      50% { transform: translate(-50%, -12px) scale(1.07); }
-    }
-
-    @keyframes orbGlowFast {
-      0%,100% { filter: drop-shadow(0 0 14px rgba(0,188,212,0.95)); }
-      50% { filter: drop-shadow(0 0 26px rgba(129,230,217,1)); }
-    }
-
-    .orb-caption {
-      position: absolute;
-      top: 86px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 12px;
-      color: var(--sce-muted);
-      background: rgba(255,255,255,0.88);
-      padding: 4px 12px;
-      border-radius: 999px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      white-space: nowrap;
-    }
-
-    .input-box {
-      display: flex;
-      margin-top: 8px;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .input-area {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      background: rgba(248,249,252,0.96);
-      border-radius: 999px;
-      padding: 4px 10px;
-      border: 1px solid var(--sce-border);
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 9px 6px;
-      border-radius: 999px;
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 14px;
-      color: var(--sce-text);
-    }
-
-    .input-area input::placeholder {
-      color: var(--sce-muted);
-    }
-
-    .send-btn {
-      padding: 10px 18px;
-      background: linear-gradient(135deg, var(--sce-primary), #1f7ed6);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 8px 20px rgba(0,75,141,0.45);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .send-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(0,75,141,0.55);
-      background: linear-gradient(135deg, #005fae, #2490ff);
-    }
-
-    .send-btn:active {
-      transform: translateY(1px);
-      box-shadow: 0 4px 12px rgba(0,75,141,0.35);
-    }
-
-    #messages::-webkit-scrollbar { width: 6px; }
-    #messages::-webkit-scrollbar-track { background: transparent; }
-    #messages::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.16);
-      border-radius: 999px;
-    }
-
-    @media (max-width: 600px) {
-      .chat-shell { padding: 14px 12px 16px; border-radius: 18px; }
-      #messages { height: 360px; }
-      .send-btn span { display: none; }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="page-wrapper">
-    <div class="chat-shell">
-      <div class="header">
-        <div class="logo-wrap">
-          <!-- ضع ملف اللوقو باسم sce-logo.png بجانب هذا الملف إن حبيت -->
-          <img src="sce-logo.png" alt="شعار الهيئة السعودية للمهندسين" onerror="this.style.display='none'" />
-        </div>
-        <div class="title-wrap">
-          <h1>مساعد الهيئة السعودية للمهندسين</h1>
-          <p>اسأل عن الاعتماد المهني، المكاتب الهندسية، الدورات، اللجان وأكثر.</p>
-        </div>
-      </div>
-
-      <div class="pill-badge">
-        <span class="icon"></span>
-        متصل · يعتمد على وثائق ولوائح الهيئة
-      </div>
-
-      <div class="messages-wrapper">
-        <div id="messages"></div>
-
-        <div class="orb-layer">
-          <div id="loadingOrb" class="loading-orb"></div>
-          <div class="orb-caption">ابدأ بسؤال مثل: "ما هي متطلبات الاعتماد المهني؟"</div>
-        </div>
-      </div>
-
-      <div class="input-box">
-        <div class="input-area">
-          <input id="msg" placeholder="اكتب سؤالك هنا..." autocomplete="off" />
-        </div>
-        <button class="send-btn" id="sendBtn">
-          <span>إرسال</span>
-          <svg viewBox="0 0 20 20" fill="none">
-            <path d="M3.2 16.5L16.7 10L3.2 3.5L3.2 8.3L11 10L3.2 11.7L3.2 16.5Z" fill="white"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // غيّر هذا لو عندك دومين آخر للـ API
-    const API_URL = "https://sce-assistant-api.onrender.com/chat";
-
-    let threadId = null;
-
-    const messagesEl = document.getElementById("messages");
-    const inputEl = document.getElementById("msg");
-    const sendBtn = document.getElementById("sendBtn");
-    const loadingOrb = document.getElementById("loadingOrb");
-
-    function addMessage(text, isUser = false) {
-      const div = document.createElement("div");
-      div.className = "msg " + (isUser ? "user" : "bot");
-      div.textContent = text;
-      messagesEl.appendChild(div);
-      // تنزل المحادثة تلقائيًا لآخر سطر
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-      return div;
-    }
-
-    function setOrbActive(isActive) {
-      if (!loadingOrb) return;
-      if (isActive) {
-        loadingOrb.classList.add("active");
-      } else {
-        loadingOrb.classList.remove("active");
-      }
-    }
-
-    async function sendMessage() {
-      const text = inputEl.value.trim();
-      if (!text) return;
-
-      addMessage(text, true);
-      inputEl.value = "";
-
-      // فقاعة "جاري البحث"
-      const loadingBubble = document.createElement("div");
-      loadingBubble.className = "msg bot";
-      loadingBubble.textContent = "جاري البحث في لوائح وأنظمة الهيئة...";
-      messagesEl.appendChild(loadingBubble);
-      messagesEl.scrollTop = messagesEl.scrollHeight;
-
-      setOrbActive(true);
-      sendBtn.disabled = true;
-      inputEl.disabled = true;
-
-      try {
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, threadId })
-        });
-
-        const data = await res.json();
-        threadId = data.threadId;
-
-        loadingBubble.remove();
-        setOrbActive(false);
-        sendBtn.disabled = false;
-        inputEl.disabled = false;
-        inputEl.focus();
-
-        if (data.answer) {
-          addMessage(data.answer, false);
-        } else if (data.error) {
-          addMessage("⚠️ " + (data.error || "حدث خطأ أثناء المعالجة."), false);
-        } else {
-          addMessage("⚠️ حدث خطأ غير متوقع.", false);
-        }
-      } catch (err) {
-        console.error(err);
-        loadingBubble.remove();
-        setOrbActive(false);
-        sendBtn.disabled = false;
-        inputEl.disabled = false;
-        addMessage("⚠️ تعذّر الاتصال بالخادم، تأكد من عمل الـ API أو الشبكة.", false);
-      }
-    }
-
-    sendBtn.addEventListener("click", sendMessage);
-
-    inputEl.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-  </script>
-</body>
-</html>
->>>>>>> 6874786 (Add SCE assistant UI page)
