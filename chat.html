@@ -40,7 +40,7 @@
       font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #fdf2ff 0, #f4f6f9 45%, #eef4ff 100%);
       direction: rtl;
-      overflow-y: auto; /* <-- هنا التعديل: السماح بالتمرير للصفحة */
+      overflow-y: auto; /* السماح بالتمرير للصفحة */
     }
 
     .page-wrap {
@@ -83,10 +83,10 @@
       gap: 8px;
     }
 
-    /* اللوقو مستطيل شوي */
+    /* اللوقو مستطيل وكبير شوي */
     .header-logo {
-      width: 96px;
-      height: 30px;
+      width: 140px;
+      height: 40px;
       border-radius: 8px;
       overflow: hidden;
       display: flex;
@@ -108,7 +108,7 @@
     }
 
     .header-title-main {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-main);
       white-space: nowrap;
@@ -119,61 +119,6 @@
       color: var(--text-muted);
       white-space: nowrap;
     }
-
-    .header-icon-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      cursor: pointer;
-      transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
-    }
-
-    .header-icon-btn:hover {
-      background: #f5f5ff;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.16);
-      transform: translateY(-1px);
-    }
-
-    .icon-x,
-    .icon-menu {
-      width: 15px;
-      height: 15px;
-      position: relative;
-    }
-
-    .icon-x::before,
-    .icon-x::after {
-      content: "";
-      position: absolute;
-      inset: 6px 1px;
-      border-radius: 999px;
-      background: #4b5563;
-    }
-
-    .icon-x::before {
-      transform: rotate(45deg);
-    }
-
-    .icon-x::after {
-      transform: rotate(-45deg);
-    }
-
-    .icon-menu span {
-      display: block;
-      height: 2px;
-      background: #4b5563;
-      border-radius: 999px;
-      margin: 2px 0;
-    }
-
-    .icon-menu span:nth-child(1) { width: 14px; }
-    .icon-menu span:nth-child(2) { width: 10px; }
-    .icon-menu span:nth-child(3) { width: 6px; }
 
     /* محتوى أعلى المحادثة: الكرة + النص */
     .chat-hero {
@@ -581,11 +526,8 @@
     <div class="chat-shell">
       <!-- الهيدر -->
       <header class="chat-header">
-        <div class="header-left">
-          <button class="header-icon-btn" type="button" title="إغلاق">
-            <div class="icon-x"></div>
-          </button>
-        </div>
+        <!-- حذفنا زر الإغلاق، وخليّنا الديف فاضي عشان التوزيع يبقى متوازن -->
+        <div class="header-left"></div>
         <div class="header-logo">
           <!-- غيّر src إلى مسار لوقو االهيئة السعودية للمهندسيين -->
           <img src="logo-ncir.png" alt="شعار االهيئة السعودية للمهندسيين" />
@@ -780,7 +722,11 @@
       }
 
       chatBody.appendChild(wrapper);
-      scrollToBottom();
+
+      // نزول تلقائي بعد ما المتصفح يرسم الرسالة بالكامل
+      setTimeout(() => {
+        scrollToBottom();
+      }, 30);
     }
 
     function addLoadingBubble() {
@@ -795,7 +741,10 @@
 
       chatBody.appendChild(wrapper);
       loadingBubble = wrapper;
-      scrollToBottom();
+
+      setTimeout(() => {
+        scrollToBottom();
+      }, 30);
     }
 
     function removeLoadingBubble() {
@@ -803,6 +752,10 @@
         loadingBubble.parentNode.removeChild(loadingBubble);
       }
       loadingBubble = null;
+
+      setTimeout(() => {
+        scrollToBottom();
+      }, 30);
     }
 
     async function callAssistantAPI(userText) {
