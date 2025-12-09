@@ -40,7 +40,7 @@
       font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #fdf2ff 0, #f4f6f9 45%, #eef4ff 100%);
       direction: rtl;
-      overflow-y: auto; /* ديسكتوب: الصفحة تتمرجح لو الشاشة قصيرة */
+      overflow-y: auto; /* الصفحة تقدر تتمرجح لو المحتوى أطول من الشاشة */
     }
 
     .page-wrap {
@@ -247,7 +247,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
     }
 
     .chip-dot {
@@ -340,7 +340,7 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
     }
 
     .msg-action-btn:hover {
@@ -425,7 +425,7 @@
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(88, 80, 236, 0.4);
-      transition: transform 0.12s.ease, box-shadow 0.12s ease, opacity 0.12s ease;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
     }
 
     .send-btn.disabled {
@@ -504,12 +504,8 @@
       }
     }
 
-    /* موبايل: نخلي الكرت فل الشاشة والتمرير داخله فقط */
+    /* موبايل: فل شاشة لكن نخلي التمرير متاح */
     @media (max-width: 520px) {
-      body {
-        overflow: hidden; /* لا تتمرجح الصفحة، بس داخل الكرت */
-      }
-
       .page-wrap {
         padding: 0;
         align-items: stretch;
@@ -531,10 +527,8 @@
     <div class="chat-shell">
       <!-- الهيدر -->
       <header class="chat-header">
-        <!-- بدون زر إغلاق -->
         <div class="header-left"></div>
         <div class="header-logo">
-          <!-- غيّر src إلى مسار لوقو االهيئة السعودية للمهندسيين -->
           <img src="logo-ncir.png" alt="شعار االهيئة السعودية للمهندسيين" />
         </div>
         <div class="header-right">
@@ -607,7 +601,7 @@
             ></textarea>
             <div class="input-hint">اضغط Enter للإرسال</div>
           </div>
-              <button id="sendBtn" class="send-btn disabled" type="button" aria-label="إرسال الرسالة">
+          <button id="sendBtn" class="send-btn disabled" type="button" aria-label="إرسال الرسالة">
             <div class="send-icon"></div>
           </button>
         </div>
@@ -635,7 +629,6 @@
     let hasFirstInteraction = false;
 
     function scrollToBottom() {
-      // التمرير داخل الدردشة نفسها
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
@@ -839,7 +832,7 @@
     });
 
     window.addEventListener("load", () => {
-      // ما نستخدم scrollToBottom هنا عشان ما ينط تحت في البداية
+      // ما ننزل تحت في البداية، نخلي الكورة والنص ظاهرين
       setTypingState(false);
     });
   </script>
