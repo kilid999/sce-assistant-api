@@ -40,7 +40,7 @@
       font-family: "Tajawal", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #fdf2ff 0, #f4f6f9 45%, #eef4ff 100%);
       direction: rtl;
-      overflow-y: auto; /* السماح بالتمرير للصفحة */
+      overflow-y: auto; /* ديسكتوب: الصفحة تتمرجح لو الشاشة قصيرة */
     }
 
     .page-wrap {
@@ -425,7 +425,7 @@
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(88, 80, 236, 0.4);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+      transition: transform 0.12s.ease, box-shadow 0.12s ease, opacity 0.12s ease;
     }
 
     .send-btn.disabled {
@@ -504,7 +504,12 @@
       }
     }
 
+    /* موبايل: نخلي الكرت فل الشاشة والتمرير داخله فقط */
     @media (max-width: 520px) {
+      body {
+        overflow: hidden; /* لا تتمرجح الصفحة، بس داخل الكرت */
+      }
+
       .page-wrap {
         padding: 0;
         align-items: stretch;
@@ -526,7 +531,7 @@
     <div class="chat-shell">
       <!-- الهيدر -->
       <header class="chat-header">
-        <!-- حذفنا زر الإغلاق، وخليّنا الديف فاضي عشان التوزيع يبقى متوازن -->
+        <!-- بدون زر إغلاق -->
         <div class="header-left"></div>
         <div class="header-logo">
           <!-- غيّر src إلى مسار لوقو االهيئة السعودية للمهندسيين -->
@@ -602,7 +607,7 @@
             ></textarea>
             <div class="input-hint">اضغط Enter للإرسال</div>
           </div>
-          <button id="sendBtn" class="send-btn disabled" type="button" aria-label="إرسال الرسالة">
+              <button id="sendBtn" class="send-btn disabled" type="button" aria-label="إرسال الرسالة">
             <div class="send-icon"></div>
           </button>
         </div>
@@ -616,10 +621,7 @@
   </div>
 
   <script>
-    // متغير الثريد للحفاظ على سياق المحادثة مثل السكربت القديم
     let threadId = null;
-
-    // نفس الـ API القديم
     const API_URL = "/api/chat";
 
     const chatBody = document.getElementById("chatBody");
@@ -630,9 +632,10 @@
     const heroSection = document.querySelector(".chat-hero");
 
     let loadingBubble = null;
-    let hasFirstInteraction = false; // عشان نخفي الكورة + الشيبس بعد أول سؤال
+    let hasFirstInteraction = false;
 
     function scrollToBottom() {
+      // التمرير داخل الدردشة نفسها
       chatBody.scrollTop = chatBody.scrollHeight;
     }
 
@@ -681,21 +684,18 @@
         copyBtn.className = "msg-action-btn";
         copyBtn.innerHTML = `<span class="msg-action-emoji">📋</span><span>نسخ</span>`;
 
-        // زر "مفيد"
         good.addEventListener("click", () => {
           good.disabled = true;
           bad.disabled = true;
           addMessage("✅ تم تسجيل ملاحظتك. يسعدني أن الإجابة كانت مفيدة لك.", "assistant");
         });
 
-        // زر "غير واضح"
         bad.addEventListener("click", () => {
           good.disabled = true;
           bad.disabled = true;
           addMessage("شكرًا لملاحظتك 🙏.\nلو حاب توضح سؤالك أكثر أو تذكر وين الإشكال في الإجابة، أقدر أعيد صياغتها لك بشكل أوضح.", "assistant");
         });
 
-        // زر نسخ حقيقي
         copyBtn.addEventListener("click", () => {
           if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(text).catch(() => {});
@@ -723,7 +723,6 @@
 
       chatBody.appendChild(wrapper);
 
-      // نزول تلقائي بعد ما المتصفح يرسم الرسالة بالكامل
       setTimeout(() => {
         scrollToBottom();
       }, 30);
@@ -780,7 +779,6 @@
 
         const data = await response.json();
 
-        // مثل السكربت القديم: answer + threadId
         threadId = data.threadId || threadId;
 
         removeLoadingBubble();
@@ -800,7 +798,6 @@
       const text = chatInput.value.trim();
       if (!text || sendBtn.classList.contains("disabled")) return;
 
-      // أول تفاعل: نخفي الكورة + شريط الأسئلة السريعة
       if (!hasFirstInteraction) {
         hasFirstInteraction = true;
         if (heroSection) {
@@ -813,7 +810,6 @@
       chatInput.style.height = "40px";
       setSendEnabled(false);
 
-      // استدعاء المساعد الحقيقي عبر API القديم
       callAssistantAPI(text);
     }
 
@@ -843,7 +839,7 @@
     });
 
     window.addEventListener("load", () => {
-      scrollToBottom();
+      // ما نستخدم scrollToBottom هنا عشان ما ينط تحت في البداية
       setTypingState(false);
     });
   </script>
