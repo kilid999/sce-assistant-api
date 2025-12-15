@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مساعد نسيم</title>
+  <title>مساعد الهيئة السعودية للمهندسين</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -24,6 +24,41 @@
 
       --radius: 22px;
       --tap: 44px;
+
+      --card:#fff;
+      --chip:#fff;
+      --chipHover:#fafbff;
+      --msgAssist:#fff;
+      --msgUserText:#fff;
+      --footer:#fff;
+
+      --success:#16a34a;
+      --danger:#ef4444;
+    }
+
+    /* ===== Dark mode (auto on mobile) ===== */
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg0:#0b1020;
+        --bg1:#0b1020;
+        --bg2:#0b1020;
+
+        --text:#e5e7eb;
+        --muted:#9aa4b2;
+        --muted2:#7b8794;
+
+        --border:#1f2937;
+        --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+
+        --card:#0f172a;
+        --chip:#0f172a;
+        --chipHover:#111c33;
+        --msgAssist:#0f172a;
+        --footer:#0f172a;
+      }
+      body{
+        background: radial-gradient(1100px 700px at 50% 10%, #101a33 0, #0b1020 55%, #0b1020 100%);
+      }
     }
 
     *{ box-sizing:border-box; }
@@ -34,7 +69,6 @@
       color: var(--text);
     }
 
-    /* ===== App shell ===== */
     .page{
       min-height:100vh;
       display:flex;
@@ -47,7 +81,7 @@
       max-width:480px;
       min-height:720px;
       max-height:860px;
-      background: var(--bg0);
+      background: var(--card);
       border:1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -65,14 +99,11 @@
       justify-content:space-between;
       padding: 10px 12px;
       border-bottom:1px solid var(--border);
-      background:#fff;
+      background: var(--card);
       flex: 0 0 auto;
     }
 
-    .tb-spacer{
-      width: var(--tap);
-      height: var(--tap);
-    }
+    .tb-spacer{ width: var(--tap); height: var(--tap); }
 
     .tb-center{
       display:flex;
@@ -83,11 +114,12 @@
       flex: 1;
     }
 
+    /* شعار مستطيل */
     .brand-icon{
-      width: 26px;
-      height: 26px;
+      width: 68px;
+      height: 32px;
       border-radius: 10px;
-      background: linear-gradient(135deg, rgba(109,94,252,.14), rgba(167,139,250,.18));
+      background: transparent;
       border: 1px solid rgba(109,94,252,.18);
       display:flex;
       align-items:center;
@@ -96,9 +128,10 @@
       flex: 0 0 auto;
     }
     .brand-icon img{
-      width: 18px; height:18px;
-      object-fit:contain;
-      opacity:.95;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity:.98;
     }
 
     .brand-title{
@@ -120,9 +153,9 @@
       justify-content:center;
       border-radius: 14px;
       transition: background .15s ease, transform .12s ease;
-      color:#334155;
+      color: var(--text);
     }
-    .tb-btn:hover{ background:#f6f7fb; }
+    .tb-btn:hover{ background: rgba(148,163,184,0.12); }
     .tb-btn:active{ transform: translateY(1px); }
 
     .icon-menu{
@@ -147,25 +180,38 @@
     .icon-menu::before{ top: 0; }
     .icon-menu::after{ bottom: 0; }
 
-    /* ===== Single Chat View ===== */
+    /* ===== Chat ===== */
     .chat{
       flex:1;
       min-height:0;
       display:flex;
       flex-direction:column;
-      background: radial-gradient(900px 520px at 50% 0%, #f6f2ff 0%, #ffffff 58%, #f7f8fb 100%);
+      background: radial-gradient(900px 520px at 50% 0%, rgba(246,242,255,.95) 0%, rgba(255,255,255,.92) 58%, rgba(247,248,251,.95) 100%);
+    }
+    @media (prefers-color-scheme: dark){
+      .chat{
+        background: radial-gradient(900px 520px at 50% 0%, rgba(16,26,51,.85) 0%, rgba(11,16,32,.92) 58%, rgba(11,16,32,.95) 100%);
+      }
     }
 
     .chat-body{
       flex:1;
       min-height:0;
       overflow:auto;
+      overflow-x:hidden;
       padding: 14px 14px 10px;
       scrollbar-width:none;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
     }
     .chat-body::-webkit-scrollbar{ display:none; }
 
-    /* ===== Home banner inside chat-body ===== */
+    /* نخلي مساحة في الأسفل عشان ما تنحجب الرسائل خلف الشريط+الإدخال */
+    .chat-body.has-dock{
+      padding-bottom: 190px; /* شريط اختصارات + إدخال + هوية */
+    }
+
+    /* ===== Home banner ===== */
     .home-banner{
       padding: 18px 8px 10px;
       display:flex;
@@ -191,6 +237,13 @@
       margin-top: 6px;
       flex: 0 0 auto;
     }
+    @media (prefers-color-scheme: dark){
+      .orb{
+        box-shadow:
+          0 0 0 12px rgba(109,94,252,0.16),
+          0 22px 60px rgba(109, 94, 252, 0.22);
+      }
+    }
     .orb::after{
       content:"";
       position:absolute;
@@ -211,41 +264,6 @@
       text-align:center;
       margin-top: 6px;
     }
-
-    /* ===== Quick actions (ثابت فوق الإدخال) ===== */
-    .quick-actions{
-      flex: 0 0 auto;
-      padding: 6px 10px 4px;
-      background: linear-gradient(to top, #ffffff 70%, rgba(255,255,255,0.85));
-      border-top: 1px solid var(--border);
-    }
-    .suggest-row{
-      width:100%;
-      display:flex;
-      gap: 10px;
-      justify-content:center;
-      overflow-x:auto;
-      padding: 6px 2px 2px;
-      scrollbar-width:none;
-    }
-    .suggest-row::-webkit-scrollbar{ display:none; }
-
-    .suggest-btn{
-      flex: 0 0 auto;
-      border:1px solid var(--border);
-      background:#fff;
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-size: 12.5px;
-      color: var(--text);
-      cursor:pointer;
-      min-width: 150px;
-      box-shadow: 0 10px 30px rgba(15,23,42,0.04);
-      transition: transform .12s ease, background .15s ease, border-color .15s ease;
-      white-space: nowrap;
-    }
-    .suggest-btn:hover{ background:#fafbff; border-color:#dfe5f3; transform: translateY(-1px); }
-    .suggest-btn:active{ transform: translateY(1px); }
 
     /* ===== Messages ===== */
     .message-group{
@@ -268,30 +286,147 @@
     .msg.user{
       align-self:flex-end;
       background: linear-gradient(135deg, var(--p), var(--p2));
-      color:#fff;
+      color: var(--msgUserText);
       border-bottom-left-radius: 6px;
     }
 
     .msg.assistant{
       align-self:flex-start;
-      background:#fff;
-      border:1px solid #edf0f7;
+      background: var(--msgAssist);
+      border:1px solid var(--border);
       box-shadow: 0 10px 30px rgba(15,23,42,0.05);
       border-bottom-right-radius: 6px;
     }
+/* ===== Loading bubble with orb ===== */
+.loading-bubble{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.loading-orb{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 25%,
+    #ffffff 0%,
+    #f5e7ff 20%,
+    #b9a5ff 45%,
+    #7c5cff 70%,
+    #4c34e6 100%);
+  box-shadow:
+    0 0 0 6px rgba(109,94,252,0.10),
+    0 10px 22px rgba(76, 52, 230, 0.18);
+  animation: orbFloat 1.8s ease-in-out infinite;
+  flex: 0 0 auto;
+}
+
+.loading-text{
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+    /* ===== Meta + Actions under assistant message ===== */
+    .msg-meta{
+      font-size: 11px;
+      color: var(--muted2);
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      margin: 0 4px;
+    }
+
+    .msg-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 2px;
+      margin-inline: 4px;
+    }
+
+    .msg-action-btn{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--chip);
+      color: var(--muted);
+      cursor: pointer;
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      font-size: 12px;
+      transition: background .15s ease, border-color .15s ease, transform .12s ease;
+      user-select:none;
+    }
+    .msg-action-btn:hover{
+      background: var(--chipHover);
+      border-color: rgba(109,94,252,.22);
+      transform: translateY(-1px);
+    }
+    .msg-action-btn:active{ transform: translateY(1px); }
+    .msg-action-btn[disabled]{ opacity:.5; cursor:default; transform:none; }
+
+    .pill-ok{ border-color: rgba(22,163,74,.35) !important; color: var(--success) !important; }
+    .pill-bad{ border-color: rgba(239,68,68,.35) !important; color: var(--danger) !important; }
+
+    /* ===== Dock (الشريط + الإدخال) ثابت تحت ===== */
+    .dock{
+      flex: 0 0 auto;
+      border-top: 1px solid var(--border);
+      background: var(--footer);
+    }
+
+    .quick-actions{
+      padding: 10px 10px 6px;
+      border-bottom: 1px solid rgba(148,163,184,0.18);
+      background: linear-gradient(to top, rgba(255,255,255,0.92), rgba(255,255,255,0.70));
+    }
+    @media (prefers-color-scheme: dark){
+      .quick-actions{
+        background: linear-gradient(to top, rgba(15,23,42,0.96), rgba(15,23,42,0.75));
+        border-bottom: 1px solid rgba(148,163,184,0.12);
+      }
+    }
+
+    .suggest-row{
+      width:100%;
+      display:flex;
+      gap: 10px;
+      justify-content:flex-start;
+      overflow-x:auto;
+      padding: 6px 2px 2px;
+      scrollbar-width:none;
+    }
+    .suggest-row::-webkit-scrollbar{ display:none; }
+
+    .suggest-btn{
+      flex: 0 0 auto;
+      border:1px solid var(--border);
+      background: var(--chip);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      color: var(--text);
+      cursor:pointer;
+      min-width: 150px;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+      transition: transform .12s ease, background .15s ease, border-color .15s ease;
+      white-space: nowrap;
+    }
+    .suggest-btn:hover{
+      background: var(--chipHover);
+      border-color: rgba(109,94,252,.22);
+      transform: translateY(-1px);
+    }
+    .suggest-btn:active{ transform: translateY(1px); }
 
     /* ===== Footer / Input ===== */
     .chat-footer{
       padding: 10px 12px 12px;
-      background:#fff;
-      border-top: 0;
-      flex: 0 0 auto;
+      background: var(--footer);
     }
 
-    .input-shell{
-      position:relative;
-      width:100%;
-    }
+    .input-shell{ position:relative; width:100%; }
 
     .chat-input{
       width:100%;
@@ -299,19 +434,19 @@
       min-height: 46px;
       max-height: 110px;
       border-radius: 18px;
-      border: 1px solid #e3e6f2;
+      border: 1px solid var(--border);
       padding: 12px 14px 12px 56px;
       outline:none;
       font-family: inherit;
       font-size: 13px;
       line-height: 1.6;
-      background:#fff;
+      background: var(--card);
       color: var(--text);
       transition: border-color .15s ease, box-shadow .15s ease;
     }
     .chat-input::placeholder{ color:#9aa4b2; }
 
-    .state-default .chat-input{ border-color:#e3e6f2; box-shadow:none; }
+    .state-default .chat-input{ box-shadow:none; }
     .state-enabled .chat-input{
       border-color: rgba(109,94,252,0.45);
       box-shadow: 0 0 0 3px rgba(109,94,252,0.12);
@@ -374,16 +509,14 @@
       padding: 8px 12px 12px;
       font-size: 11px;
       color: var(--muted2);
-      background:#fff;
-      border-top: 1px solid transparent;
-      flex: 0 0 auto;
+      background: var(--footer);
     }
 
     /* ===== Drawer (History) ===== */
     .drawer{
       position:absolute;
       inset:0;
-      background:#fff;
+      background: var(--card);
       transform: translateX(100%);
       transition: transform .22s ease;
       display:flex;
@@ -399,7 +532,7 @@
       justify-content:space-between;
       padding: 10px 12px;
       border-bottom:1px solid var(--border);
-      background:#fff;
+      background: var(--card);
       flex: 0 0 auto;
       gap: 8px;
     }
@@ -413,7 +546,7 @@
 
     .new-chat{
       border:1px solid var(--border);
-      background:#fff;
+      background: var(--chip);
       border-radius: 14px;
       padding: 10px 12px;
       cursor:pointer;
@@ -423,7 +556,7 @@
       transition: transform .12s ease, background .15s ease, border-color .15s ease;
       white-space: nowrap;
     }
-    .new-chat:hover{ background:#fafbff; border-color:#dfe5f3; transform: translateY(-1px); }
+    .new-chat:hover{ background: var(--chipHover); border-color: rgba(109,94,252,.22); transform: translateY(-1px); }
     .new-chat:active{ transform: translateY(1px); }
 
     .hist{
@@ -431,8 +564,13 @@
       min-height:0;
       overflow:auto;
       padding: 12px 12px 16px;
-      background: radial-gradient(900px 520px at 50% 0%, #f6f2ff 0%, #ffffff 58%, #f7f8fb 100%);
+      background: radial-gradient(900px 520px at 50% 0%, rgba(246,242,255,.95) 0%, rgba(255,255,255,.92) 58%, rgba(247,248,251,.95) 100%);
       scrollbar-width:none;
+    }
+    @media (prefers-color-scheme: dark){
+      .hist{
+        background: radial-gradient(900px 520px at 50% 0%, rgba(16,26,51,.85) 0%, rgba(11,16,32,.92) 58%, rgba(11,16,32,.95) 100%);
+      }
     }
     .hist::-webkit-scrollbar{ display:none; }
 
@@ -449,14 +587,14 @@
       justify-content:space-between;
       gap: 10px;
       padding: 12px 12px;
-      background:#fff;
+      background: var(--chip);
       border:1px solid var(--border);
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(15,23,42,0.04);
       margin-bottom: 10px;
       cursor:pointer;
     }
-    .hist-item:hover{ border-color:#dfe5f3; background:#fff; }
+    .hist-item:hover{ border-color: rgba(109,94,252,.22); background: var(--chipHover); }
     .hist-text{
       flex:1;
       font-size: 13px;
@@ -479,7 +617,7 @@
       justify-content:center;
       flex: 0 0 auto;
     }
-    .trash:hover{ background:#f6f7fb; border-color:#eef0f6; }
+    .trash:hover{ background: rgba(148,163,184,0.12); border-color: rgba(148,163,184,0.12); }
 
     .empty-hist{
       margin-top: 40px;
@@ -518,10 +656,9 @@
 
         <div class="tb-center">
           <div class="brand-icon">
-            <!-- غيّرها لأيقونة نسيم/الجهة -->
             <img src="sce-logo.png" alt="شعار الهيئة السعودية للمهندسين" />
           </div>
-          <div class="brand-title">مساعد نسيم</div>
+          <div class="brand-title">مساعد الهيئة السعودية للمهندسين</div>
         </div>
 
         <button class="tb-btn" id="btnMenu" type="button" aria-label="القائمة">
@@ -531,76 +668,69 @@
 
       <!-- Single Chat View -->
       <section class="chat" id="chatView">
-        <main class="chat-body" id="chatBody">
-          <!-- Home banner (يختفي بعد أول إرسال أو عند فتح محادثة فيها رسائل) -->
+        <main class="chat-body has-dock" id="chatBody">
           <div class="home-banner" id="homeBanner">
             <div class="orb" aria-hidden="true"></div>
             <div class="home-title">كيف يمكنني مساعدتك اليوم؟</div>
           </div>
 
-          <!-- optional small welcome -->
           <div class="message-group" id="welcomeMsg">
-            <div class="msg assistant">أهلاً بك 👋\nاكتب سؤالك مباشرة أو اختر أحد الخيارات بالأسفل للبدء.</div>
+            <div class="msg assistant">أهلاً بك 👋
+اكتب سؤالك مباشرة أو اختر أحد الخيارات بالأسفل للبدء.</div>
           </div>
         </main>
 
-        <!-- Quick Actions ثابت -->
-        <div class="quick-actions" id="quickActions">
-          <div class="suggest-row" id="suggestRow">
-            <button class="suggest-btn" data-text="أبي أعرف تفاصيل خدمة معينة">أبي أعرف تفاصيل خدمة معينة</button>
-            <button class="suggest-btn" data-text="ساعدني ألقي الدليل أو الإجراء المناسب">ساعدني ألقي الدليل أو الإجراء المناسب</button>
-            <button class="suggest-btn" data-text="عندي سؤال عن متطلبات الرصد والرقابة">عندي سؤال عن متطلبات الرصد والرقابة</button>
+        <!-- Dock ثابت تحت: شريط اختصارات + إدخال -->
+        <div class="dock">
+          <div class="quick-actions" id="quickActions">
+            <div class="suggest-row" id="suggestRow">
+              <button class="suggest-btn" data-text="أرغب في معرفة تفاصيل إحدى خدمات الهيئة السعودية للمهندسين">تفاصيل خدمات الهيئة</button>
+              <button class="suggest-btn" data-text="ما هي خطوات الحصول على الاعتماد المهني للمهندسين">آلية الاعتماد المهني</button>
+              <button class="suggest-btn" data-text="أرشدني إلى متطلبات التصنيف المهني حسب تخصصي الهندسي">متطلبات التصنيف المهني</button>
+              <button class="suggest-btn" data-text="أحتاج شرحًا مبسطًا عن كود البناء السعودي ومتطلباته">كود البناء السعودي</button>
+              <button class="suggest-btn" data-text="ما هي شروط تسجيل المكاتب والشركات الهندسية لدى الهيئة">تسجيل المكاتب الهندسية</button>
+              <button class="suggest-btn" data-text="لدي استفسار حول الدورات التدريبية والاختبارات المهنية المعتمدة">الدورات والاختبارات المهنية</button>
+              <button class="suggest-btn" data-text="أرغب في معرفة الإجراءات المتبعة لتحديث البيانات أو تجديد العضوية">تجديد العضوية وتحديث البيانات</button>
+              <button class="suggest-btn" data-text="ما هي اللوائح والأنظمة المهنية المعتمدة لدى الهيئة السعودية للمهندسين">اللوائح والأنظمة المهنية</button>
+            </div>
           </div>
+
+          <footer class="chat-footer">
+            <div class="input-shell state-default" id="inputState">
+              <textarea id="chatInput" class="chat-input" rows="1" placeholder="اكتب سؤالك هنا..."></textarea>
+              <button id="sendBtn" class="send-in disabled" type="button" aria-label="إرسال">
+                <span class="arrow-up"></span>
+              </button>
+            </div>
+          </footer>
+
+          <div class="brand-strip">مدعوم من المركز الوطني للتفتيش والرقابة</div>
         </div>
-
-        <!-- Input ثابت -->
-        <footer class="chat-footer">
-          <div class="input-shell state-default" id="inputState">
-            <textarea id="chatInput" class="chat-input" rows="1" placeholder="اكتب سؤالك هنا..."></textarea>
-            <button id="sendBtn" class="send-in disabled" type="button" aria-label="إرسال">
-              <span class="arrow-up"></span>
-            </button>
-          </div>
-        </footer>
-
-        <div class="brand-strip">مدعوم من المركز الوطني للتقييم والتفتيش والرقابة</div>
       </section>
 
       <!-- History Drawer -->
       <aside class="drawer" id="historyDrawer" aria-label="المحادثات">
         <div class="drawer-top">
-          <!-- زر رجوع/إغلاق الدرج -->
           <button class="tb-btn" id="btnCloseDrawer" type="button" aria-label="رجوع">←</button>
-
           <div class="drawer-title">المحادثات</div>
-
           <button class="new-chat" id="btnNewChat" type="button">بدء محادثة</button>
         </div>
 
         <div class="hist" id="historyList"></div>
-        <div class="brand-strip">مدعوم من المركز الوطني للتقييم والتفتيش والرقابة</div>
+        <div class="brand-strip">مدعوم من المركز الوطني للتفتيش والرقابة</div>
       </aside>
     </div>
   </div>
 
   <script>
-    /* ===========================
-       CONFIG
-    ============================ */
     const API_URL = "/api/chat";
     const LS_KEY = "nasim_conversations";
     const LS_ACTIVE = "nasim_active_conversation_id";
 
-    /* ===========================
-       STATE
-    ============================ */
     let conversations = loadConversations();
     let activeConvId = localStorage.getItem(LS_ACTIVE) || null;
     let loadingBubble = null;
 
-    /* ===========================
-       ELEMENTS
-    ============================ */
     const btnMenu = document.getElementById("btnMenu");
     const historyDrawer = document.getElementById("historyDrawer");
     const historyList = document.getElementById("historyList");
@@ -616,9 +746,6 @@
     const homeBanner = document.getElementById("homeBanner");
     const welcomeMsg = document.getElementById("welcomeMsg");
 
-    /* ===========================
-       UTIL
-    ============================ */
     function nowISO(){ return new Date().toISOString(); }
 
     function loadConversations(){
@@ -656,9 +783,6 @@
       return conversations.find(c => c.id === activeConvId) || null;
     }
 
-    /* ===========================
-       SMART TITLE (مختصر)
-    ============================ */
     function smartTitleFrom(text){
       let s = (text || "").trim();
       s = s.replace(/[؟?!.،؛:]+/g, " ").replace(/\s+/g, " ").trim();
@@ -679,9 +803,6 @@
       return (pick.slice(0, 5).join(" ") || "محادثة");
     }
 
-    /* ===========================
-       HOME BANNER VISIBILITY
-    ============================ */
     function showHomeBanner(){
       if(homeBanner) homeBanner.style.display = "flex";
       if(welcomeMsg) welcomeMsg.style.display = "block";
@@ -692,39 +813,122 @@
       if(welcomeMsg) welcomeMsg.style.display = "none";
     }
 
-    /* ===========================
-       UI RENDER
-    ============================ */
-    function addMessage(text, sender="assistant"){
-      const group = document.createElement("div");
-      group.className = "message-group";
+    function addAssistantActions(wrapper, text, msgId){
+      const meta = document.createElement("div");
+      meta.className = "msg-meta";
+      meta.innerHTML = `<span>الآن</span> · <span>SCE</span>`;
+      wrapper.appendChild(meta);
+
+      const actions = document.createElement("div");
+      actions.className = "msg-actions";
+
+      const like = document.createElement("button");
+      like.className = "msg-action-btn";
+      like.innerHTML = "👍 إعجاب";
+      like.addEventListener("click", () => rateMessage(msgId, "up", like));
+
+      const dislike = document.createElement("button");
+      dislike.className = "msg-action-btn";
+      dislike.innerHTML = "👎 غير مفيد";
+      dislike.addEventListener("click", () => rateMessage(msgId, "down", dislike));
+
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "msg-action-btn";
+      copyBtn.innerHTML = "📋 نسخ";
+      copyBtn.addEventListener("click", () => copyText(text));
+
+      const shareBtn = document.createElement("button");
+      shareBtn.className = "msg-action-btn";
+      shareBtn.innerHTML = "🔗 مشاركة";
+      shareBtn.addEventListener("click", () => shareText(text));
+
+      actions.appendChild(like);
+      actions.appendChild(dislike);
+      actions.appendChild(copyBtn);
+      actions.appendChild(shareBtn);
+
+      wrapper.appendChild(actions);
+    }
+
+    async function copyText(text){
+      try{
+        if(navigator.clipboard && window.isSecureContext){
+          await navigator.clipboard.writeText(text);
+        }else{
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+      }catch(e){}
+    }
+
+    async function shareText(text){
+      try{
+        if(navigator.share){
+          await navigator.share({ text });
+        }else{
+          await copyText(text);
+          addMessage("✅ تم نسخ النص، يمكنك مشاركته الآن.", "assistant", { system:true });
+        }
+      }catch(e){}
+    }
+
+    function addMessage(text, sender="assistant", opts={}){
+      const wrapper = document.createElement("div");
+      wrapper.className = "message-group";
+
       const msg = document.createElement("div");
       msg.className = "msg " + (sender === "user" ? "user" : "assistant");
       msg.innerText = text;
-      group.appendChild(msg);
-      chatBody.appendChild(group);
-      setTimeout(scrollToBottom, 20);
+      wrapper.appendChild(msg);
+
+      // ID للرسالة (للتقييم)
+      const msgId = opts.msgId || ("m_" + Math.random().toString(16).slice(2));
+
+      if(sender === "assistant" && !opts.noActions){
+        addAssistantActions(wrapper, text, msgId);
+      }
+
+      chatBody.appendChild(wrapper);
+      setTimeout(scrollToBottom, 30);
+
+      return { wrapper, msgId };
     }
 
-    function addLoadingBubble(){
-      if(loadingBubble) return;
-      const group = document.createElement("div");
-      group.className = "message-group";
-      const msg = document.createElement("div");
-      msg.className = "msg assistant";
-      msg.innerText = "⏳ جاري المعالجة.";
-      group.appendChild(msg);
-      chatBody.appendChild(group);
-      loadingBubble = group;
-      setTimeout(scrollToBottom, 20);
-    }
+   function addLoadingBubble(){
+  if(loadingBubble) return;
+
+  const group = document.createElement("div");
+  group.className = "message-group";
+
+  const msg = document.createElement("div");
+  msg.className = "msg assistant";
+
+  msg.innerHTML = `
+    <div class="loading-bubble">
+      <span class="loading-orb" aria-hidden="true"></span>
+      <span class="loading-text">جاري البحث في لوائح وأنظمة الهيئة السعودية للمهندسين...</span>
+    </div>
+  `;
+
+  group.appendChild(msg);
+  chatBody.appendChild(group);
+
+  loadingBubble = group;
+  setTimeout(scrollToBottom, 20);
+}
 
     function removeLoadingBubble(){
       if(loadingBubble && loadingBubble.parentNode){
         loadingBubble.parentNode.removeChild(loadingBubble);
       }
       loadingBubble = null;
-      setTimeout(scrollToBottom, 20);
+      setTimeout(scrollToBottom, 30);
     }
 
     function clearRenderedMessagesKeepBanner(){
@@ -744,14 +948,13 @@
       else showHomeBanner();
 
       for(const m of conv.messages){
-        addMessage(m.text, m.role);
+        const res = addMessage(m.text, m.role, { msgId: m.id, noActions: m.role !== "assistant" ? true : false });
+        // ملاحظة: للأستاذية — أفعال الرسائل تُعاد تلقائياً للـ assistant
       }
-      setTimeout(scrollToBottom, 20);
+
+      setTimeout(scrollToBottom, 30);
     }
 
-    /* ===========================
-       HISTORY (اليوم / الأسبوع الماضي)
-    ============================ */
     function isSameDay(d1, d2){
       return d1.getFullYear() === d2.getFullYear()
         && d1.getMonth() === d2.getMonth()
@@ -802,7 +1005,6 @@
           const row = document.createElement("div");
           row.className = "hist-item";
 
-          // highlight current
           if(c.id === activeConvId){
             row.style.borderColor = "rgba(109,94,252,.55)";
           }
@@ -854,9 +1056,6 @@
       renderHistory();
     }
 
-    /* ===========================
-       CONVERSATION CONTROL
-    ============================ */
     function startNewConversation(){
       activeConvId = null;
       localStorage.removeItem(LS_ACTIVE);
@@ -882,7 +1081,8 @@
         createdAt,
         updatedAt: createdAt,
         threadId: null,
-        messages: []
+        messages: [],
+        ratings: {} // msgId -> up/down
       };
 
       conversations.unshift(conv);
@@ -894,8 +1094,8 @@
       return conv;
     }
 
-    function pushMessageToConv(conv, role, text){
-      conv.messages.push({ role, text, ts: nowISO() });
+    function pushMessageToConv(conv, role, text, id){
+      conv.messages.push({ role, text, ts: nowISO(), id });
       conv.updatedAt = nowISO();
 
       if(!conv.title || conv.title === "محادثة"){
@@ -905,9 +1105,30 @@
       saveConversations();
     }
 
-    /* ===========================
-       API
-    ============================ */
+    function rateMessage(msgId, dir, btn){
+      const conv = getActiveConversation();
+      if(!conv) return;
+
+      conv.ratings = conv.ratings || {};
+      conv.ratings[msgId] = dir;
+      saveConversations();
+
+      // UI feedback
+      btn.classList.add(dir === "up" ? "pill-ok" : "pill-bad");
+      btn.disabled = true;
+
+      // عطّل الزر المقابل كذلك
+      const group = btn.closest(".message-group");
+      if(group){
+        const buttons = [...group.querySelectorAll(".msg-action-btn")];
+        for(const b of buttons){
+          if(b !== btn && (b.textContent.includes("إعجاب") || b.textContent.includes("غير مفيد"))){
+            b.disabled = true;
+          }
+        }
+      }
+    }
+
     async function callAssistantAPI(conv, userText){
       addLoadingBubble();
       try{
@@ -928,16 +1149,22 @@
         removeLoadingBubble();
 
         const answer = data.answer || "لم أستطع قراءة الإجابة من الخدمة. تأكد من وجود المفتاح answer في الاستجابة.";
-        addMessage(answer, "assistant");
-        pushMessageToConv(conv, "assistant", answer);
+        const msgId = "a_" + Math.random().toString(16).slice(2);
+
+        addMessage(answer, "assistant", { msgId });
+        pushMessageToConv(conv, "assistant", answer, msgId);
 
         renderHistory();
       }catch(err){
         console.error("API error:", err);
         removeLoadingBubble();
+
         const msg = "⚠️ حدث خطأ أثناء الاتصال بالخدمة.\nتأكد أن واجهة المساعد متاحة ثم حاول مرة أخرى.";
-        addMessage(msg, "assistant");
-        pushMessageToConv(conv, "assistant", msg);
+        const msgId = "e_" + Math.random().toString(16).slice(2);
+
+        addMessage(msg, "assistant", { msgId });
+        pushMessageToConv(conv, "assistant", msg, msgId);
+
         renderHistory();
       }
     }
@@ -950,8 +1177,9 @@
 
       const conv = ensureConversationExists(text);
 
-      addMessage(text, "user");
-      pushMessageToConv(conv, "user", text);
+      const userMsgId = "u_" + Math.random().toString(16).slice(2);
+      addMessage(text, "user", { noActions:true, msgId:userMsgId });
+      pushMessageToConv(conv, "user", text, userMsgId);
 
       chatInput.value = "";
       chatInput.style.height = "46px";
@@ -962,9 +1190,6 @@
       callAssistantAPI(conv, text);
     }
 
-    /* ===========================
-       DRAWER CONTROL (يرجع بدون تصفير)
-    ============================ */
     function openDrawer(){
       renderHistory();
       historyDrawer.classList.add("open");
@@ -973,13 +1198,9 @@
       historyDrawer.classList.remove("open");
     }
 
-    /* ===========================
-       EVENTS
-    ============================ */
     btnMenu.addEventListener("click", openDrawer);
     btnCloseDrawer.addEventListener("click", closeDrawer);
 
-    // إغلاق بالضغط على الخلفية (بدون تصفير)
     historyDrawer.addEventListener("click", (e) => {
       if(e.target === historyDrawer) closeDrawer();
     });
@@ -1025,9 +1246,6 @@
 
     sendBtn.addEventListener("click", handleSend);
 
-    /* ===========================
-       INIT
-    ============================ */
     window.addEventListener("load", () => {
       setSendEnabled(false);
       setInputVisualState("state-default");
@@ -1040,7 +1258,7 @@
         clearRenderedMessagesKeepBanner();
       }
 
-      setTimeout(scrollToBottom, 50);
+      setTimeout(scrollToBottom, 80);
     });
   </script>
 </body>
